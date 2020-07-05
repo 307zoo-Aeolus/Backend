@@ -8,4 +8,8 @@ urlpatterns = [
     path('change/',views.changePassword),
     path('reset/',views.resetPassword),
     path('confirm/',views.userConfirm),
+    path('interns/get/',views.getInterns),
+    path('interns/post/',views.postInterns),
+    path('ras/get/',views.getRAs),
+    path('ras/post/',views.postRAs),
     ]

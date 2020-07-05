@@ -127,7 +127,7 @@ http方法：POST
 }
 ```
 
-后端返回的json数据格式如下：
+当重置成功时，后端返回的json数据格式如下：
 
 ```json
 {
@@ -135,3 +135,106 @@ http方法：POST
     "type": "changePassword",		/*当status为error时，type显示具体错误信息；ok则为resetPassword*/
 }
 ```
+
+## 信息订阅
+
+### 路径
+
+Aeolus/login
+
+### 完成进度
+
+实习添加收藏、查看收藏、删除收藏的接口已写好
+
+研究助理添加收藏、查看收藏、删除收藏的接口已写好
+
+### 调用方法
+
+#### 查看实习收藏
+
+URL：http://127.0.0.1:8000/user/interns/get/
+
+http方法：GET
+
+前端调用该接口时，用户应当处于登录状态，并将用户登录时的cookie传给后端。
+
+当查看成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",		/*ok和error分别对应查看成功与查看失败*/
+    "type": "interns",		/*当status为error时，type字段显示错误信息；否则为interns*/
+    "content": [{"index": "", "job": "", "job_link": "", "company_name": "", "city": "", "duration": "", "frequency": "", "salary": "",}]	/*当status为error时无content字段；否则返回收藏实习列表*/
+}
+```
+
+#### 修改实习收藏
+
+URL：http://127.0.0.1:8000/user/interns/post/
+
+http方法：POST
+
+前端需要提供的json参数格式为：
+
+```json
+{
+    "content": ["",]	/*该用户新的收藏研究助理index号码列表*/
+}
+```
+
+前端在调用该接口时，用户应处于登录状态，并将用户登录时的cookie传给后端。
+
+当修改成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",		/*ok和error分别对应修改成功与修改失败*/
+    "type": "interns",	/*当status为error时，type字段显示错误信息；否则为interns*/
+    "content": [{"index": "", "job": "", "job_link": "", "company_name": "", "city": "", "duration": "", "frequency": "", "salary": "",}]	/*当status为error时无content字段；否则返回收藏实习列表*/
+}
+```
+
+#### 查看研究助理收藏
+
+URL：http://127.0.0.1:8000/user/ras/get/
+
+http方法：GET
+
+前端调用该接口时，用户应当处于登录状态，并将用户登录时的cookie传给后端。
+
+当查看成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",		/*ok和error分别对应查看成功与查看失败*/
+    "type": "ras",	/*当status为error时，type字段显示错误信息；否则为ras*/
+    "content": [{"index": "", "title": "", "location": "", "link": "",}]	/*当status为error时无content字段；否则返回收藏研究助理列表*/
+}
+```
+
+#### 修改研究助理收藏
+
+URL：http://127.0.0.1:8000/user/ras/post/
+
+http方法：POST
+
+前端需要提供的json参数格式为：
+
+```json
+{
+    "content": ["",]	/*该用户新的收藏实习index号码列表*/
+}
+```
+
+前端在调用该接口时，用户应处于登录状态，并将用户登录时的cookie传给后端。
+
+当修改成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",		/*ok和error分别对应修改成功与修改失败*/
+    "type": "ras",	/*当status为error时，type字段显示错误信息；否则为ras*/
+    "content": [{"index": "", "title": "", "location": "", "link": "",}]	/*当status为error时无content字段；否则返回收藏研究助理列表*/
+}
+```
+

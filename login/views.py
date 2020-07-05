@@ -240,3 +240,108 @@ def resetPassword(request):
     else:
         return myJsonResponse(dictFail('Request method is not POST.'))
 
+
+def postContentInterns(user, content):
+    internsSet = set([x for x in user.interns.all()])
+    internsPostSet = set()
+    for index in content:
+        try:
+            interns = models.Interns.get(index=index)
+        except:
+            return False
+        internsPostSet.add(region)
+    for i in internsPostSet-internsSet: user.interns.add(i)
+    for i in internsSet-internsPostSet: user.interns.remove(i)
+    return True
+
+
+@csrf_exempt
+def getInterns(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logouted'))
+    username = request.session['username']
+    try:
+        user = models.User.objects.get(name=username)
+    except:
+        return myJsonResponse(dictFail('User {} not existed.'.format(username)))
+    internsList = [{'index': x.index, 'job': x.job, 'job_link': x.job_link, 
+                    'company_name': x.company_name, 'city': x.city, 'duration': x.duration, 
+                    'frequency': x.frequency, 'salary': x.salary} for x in user.interns.all()]
+    return myJsonResponse({'status': 'ok',
+                           'type': 'interns',
+                           'content': internsList})
+
+
+@csrf_exempt
+def postInterns(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logout.'))
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = request.session['username']
+        content = data['content']
+        try:
+            user = models.User.get(name=username)
+        except:
+            return myJsonResponse(dictFail('User {} not existed.'.format(username)))
+        postContentInterns(user, content)
+        internsList = [{'index': x.index, 'job': x.job, 'job_link': x.job_link, 
+                        'company_name': x.company_name, 'city': x.city, 'duration': x.duration, 
+                        'frequency': x.frequency, 'salary': x.salary} for x in user.interns.all()]
+        return myJsonResponse({'status': 'ok',
+                               'type': 'interns',
+                               'content': internsList})
+    else:
+        return myJsonResponse(dictFail('Request method is not POST.'))
+
+
+def postContentRAs(user, content):
+    RAsSet = set([x for x in user.ras.all()])
+    RAsPostSet = set()
+    for index in content:
+        try:
+            ras = models.RAs.get(index=index)
+        except:
+            return False
+        RAsPostSet.add(region)
+    for i in RAsPostSet-RAsSet: user.ras.add(i)
+    for i in RAsSet-RAsPostSet: user.ras.remove(i)
+    return True
+
+
+@csrf_exempt
+def getRAs(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logouted'))
+    username = request.session['username']
+    try:
+        user = models.User.objects.get(name=username)
+    except:
+        return myJsonResponse(dictFail('User {} not existed.'.format(username)))
+    RAsList = [{'index': x.index, 'title': x.title, 'location': x.location,
+                'link': x.link} for x in user.ras.all()]
+    return myJsonResponse({'status': 'ok',
+                           'type': 'ras',
+                           'content': RAsList})
+
+
+@csrf_exempt
+def postRAs(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logout.'))
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = request.session['username']
+        content = data['content']
+        try:
+            user = models.User.get(name=username)
+        except:
+            return myJsonResponse(dictFail('User {} not existed.'.format(username)))
+        postContentRAs(user, content)
+        RAsList = [{'index': x.index, 'title': x.title, 'location': x.location,
+                    'link': x.link} for x in user.ras.all()]
+        return myJsonResponse({'status': 'ok',
+                               'type': 'ras',
+                               'content': RAsList})
+    else:
+        return myJsonResponse(dictFail('Request method is not POST.'))
