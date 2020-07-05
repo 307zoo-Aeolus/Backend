@@ -111,8 +111,8 @@ def login(request):
                 request.session['user_id'] = user.id
                 request.session['user_name'] = user.name
                 ret = {'status': 'ok',
-                        'type': 'account',
-                        'currentAuthority': user.authority}
+                       'type': 'account',
+                       'currentAuthority': user.authority}
                 return myJsonResponse(ret)
             else:
                 message = 'Wrong password for user {}'.format(username)
@@ -188,7 +188,7 @@ def getCurrentUser(request):
     if not request.session.get('is_login', None):
         return myJsonResponse(dictFail('Already logout.'))
     return myJsonResponse({'status': 'ok',
-                           'username': request.session['user_name']})
+                            'username': request.session['user_name']})
 
 
 @csrf_exempt
@@ -197,7 +197,7 @@ def changePassword(request):
         return myJsonResponse(dictFail('Already logout.'))
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = data['userName']
+        username = data['username']
         oldpsw, newpsw = data['oldpsw'], data['newpsw']
         if newpsw == '':
             return myJsonResponse(dictFail('Invalid new password'))
@@ -223,7 +223,7 @@ def changePassword(request):
 def resetPassword(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = data['userName']
+        username = data['username']
         try:
             user = models.User.objects.get(name=username)
         except:
@@ -240,4 +240,3 @@ def resetPassword(request):
     else:
         return myJsonResponse(dictFail('Request method is not POST.'))
 
-        

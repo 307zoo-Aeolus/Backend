@@ -8,14 +8,15 @@ class User(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     has_confirmed = models.BooleanField(default=False)
     authority = models.CharField(max_length=10, default='user')
+    interns = models.ManyToManyField('Interns',blank=True)
 
     def __str__(self):
         return self.name
     
-#    class Meta:
-#        ordering = ['-created_time']
-#        verbose_name = '用户'
-#        verbose_name_plural = '用户'
+    class Meta:
+        ordering = ['-created_time']
+        verbose_name = '用户'
+        verbose_name_plural = '用户'
 
 
 class ConfirmString(models.Model):
@@ -25,3 +26,9 @@ class ConfirmString(models.Model):
 
     def __str__(self):
         return self.user.name + ":" + self.code
+
+    class Meta:
+        ordering = ['-created_time']
+        verbose_name = '确认码'
+        verbose_name_plural = '确认码'
+

@@ -18,7 +18,7 @@ Backend/login
 
 #### 登录
 
-URL：
+URL：http://127.0.0.1:8000/user/login/
 
 http方法：POST
 
@@ -35,15 +35,15 @@ http方法：POST
 
 ```json
 {
-    "status": "ok",						/*ok和error分别对应登录成功与登录失败*/
-    "type": "account",					/*当status为error时，type显示具体错误信息；ok则为account*/
+    "status": "ok",	/*ok和error分别对应登录成功与登录失败*/
+    "type": "account",	/*当status为error时，type显示具体错误信息；ok则为account*/
     "currentAuthority": "user/admin"	/*用户权限分为user和admin*/
 }
 ```
 
 #### 注册
 
-URL：
+URL：http://127.0.0.1:8000/user/register/
 
 http方法：POST
 
@@ -51,10 +51,10 @@ http方法：POST
 
 ```json
 {
-    "username": "",		/*用户名*/
+    "username": "",	/*用户名*/
     "password1": "",	/*密码*/
     "password2": "",	/*重复密码，需要两次密码一致才可成功注册*/
-    "email": "",		/*邮箱，一个邮箱只能注册一个账号*/
+    "email": "",	/*邮箱，一个邮箱只能注册一个账号*/
     "authority": "",	/*用户权限，分为user和admin*/
 }
 ```
@@ -63,8 +63,8 @@ http方法：POST
 
 ```json
 {
-    "status": "ok",						/*ok和error分别对应注册成功与注册失败*/
-    "type": "register",					/*当status为error时，type显示具体错误信息；ok则为register*/
+    "status": "ok",		/*ok和error分别对应注册成功与注册失败*/
+    "type": "register",		/*当status为error时，type显示具体错误信息；ok则为register*/
 }
 ```
 
@@ -72,7 +72,7 @@ http方法：POST
 
 #### 登出
 
-URL：
+URL：http://127.0.0.1:8000/user/logout/
 
 http方法：POST
 
@@ -82,14 +82,14 @@ http方法：POST
 
 ```json
 {
-    "status": "ok",						/*ok和error分别对应登出成功与登出失败*/
-    "type": "logout",					/*当status为error时，type显示具体错误信息；ok则为logout*/
+    "status": "ok",		/*ok和error分别对应登出成功与登出失败*/
+    "type": "logout",		/*当status为error时，type显示具体错误信息；ok则为logout*/
 }
 ```
 
 #### 修改密码
 
-URL：
+URL：http://127.0.0.1:8000/user/change/
 
 http方法：POST
 
@@ -108,14 +108,14 @@ http方法：POST
 
 ```json
 {
-    "status": "ok",						/*ok和error分别对应修改成功与修改失败*/
-    "type": "changePassword",			/*当status为error时，type显示具体错误信息；ok则为changePassword*/
+    "status": "ok",		/*ok和error分别对应修改成功与修改失败*/
+    "type": "changePassword",		/*当status为error时，type显示具体错误信息；ok则为changePassword*/
 }
 ```
 
 #### 忘记密码
 
-URL：
+URL：http://127.0.0.1:8000/reset/
 
 http方法：POST
 
@@ -131,7 +131,7 @@ http方法：POST
 
 ```json
 {
-    "status": "ok",						/*ok和error分别对应重置成功与重置失败*/
-    "type": "changePassword",			/*当status为error时，type显示具体错误信息；ok则为resetPassword*/
+    "status": "ok",		/*ok和error分别对应重置成功与重置失败*/
+    "type": "changePassword",		/*当status为error时，type显示具体错误信息；ok则为resetPassword*/
 }
 ```
