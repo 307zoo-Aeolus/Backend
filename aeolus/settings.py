@@ -25,7 +25,7 @@ SECRET_KEY = 'bcgya8=zv@@hf9q%#z@svm%j*bnxz)$tp(d3^ng2xuow75_0bc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,12 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'login',
     'rest_framework',
 ]
 
+SESSION_COOKIE_AGE=86400
+SESSION_COOKIE_HTTPONLY = False
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,9 +83,9 @@ WSGI_APPLICATION = 'aeolus.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',   # 设置数据库引擎，若连接MySQL数据库则更改为mysql
-        'NAME': 'djangomysql',                    # 连接的数据库名
+        'NAME': 'users',                    # 连接的数据库名
         'USER': 'root',                         # 自己设置的账号
-        'PASSWORD': 'google307zoo',             # 自己设置的密码
+        'PASSWORD': 'yqw990902',             # 自己设置的密码
         'HOST': '127.0.0.1',                    # 数据库host
         'PORT': '3306',                         # 数据库端口号
     }
@@ -120,9 +125,50 @@ USE_L10N = True
 USE_TZ = True
 
 
+CORS_ALLOW_CREDENTIALS=True
+
+CORS_ORIGIN_ALLOW_ALL=True
+
+CORS_ORIGIN_WHITELIST = (
+'http://127.0.0.1:3000',
+'http://localhost:3000',
+)
+
+CORS_ALLOW_METHODS=[
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'VIEW',
+]
+
+CORS_ALLOW_HEADERS=[
+    'XMLHttpRequest',
+    'X_FILENAME',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Pragma',
+]
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL=True
+EMAIL_HOST='smtp.qq.com'
+EMAIL_PORT=465
+EMAIL_HOST_USER='2770660602@qq.com'
+EMAIL_HOST_PASSWORD='azsqhtpnvsorddga'
+DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
+CONFIRM_DAYS=1

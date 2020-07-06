@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-import json, hashlib, datetime, validators, pytz
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+import hashlib, datetime, pytz, json, csv, time, validators
 from . import models
 
 
@@ -49,7 +49,7 @@ def sendRegisterEmail(email, username, code):
     subject = 'Registration Confirm for {}'.format(username)
     textContent = 'This is a registration confirmation.'
     htmlContent = '''<p>Click <a href="http://{}/user/confirm/?code={}" target="blank">confirm link</a>
-                    to accomplish the confirmation.</p>'''.format('localhost:8001', code, settings.CONFIRM_DAYS)
+                    to accomplish the confirmation.</p>'''.format('localhost:8000', code, 1) # CONFIRM_DAYS
     message = EmailMultiAlternatives(subject, textContent, settings.DEFAULT_FROM_EMAIL, [email])
     message.attach_alternative(htmlContent, 'text/html')
     message.send()
@@ -77,7 +77,7 @@ def userConfirm(request):
     created_time = confirm.created_time
     now = datetime.datetime.now()
     now = now.replace(tzinfo=pytz.timezone('UTC'))
-    old = created_time + datetime.timedelta(settings.CONFRIM_DAYS)
+    old = created_time + datetime.timedelta(1) # CONFIRM_DAYS
     if now>old:
         confirm.user.delete()
         message = 'Your email expired. Please register again.'
