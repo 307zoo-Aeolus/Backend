@@ -1,5 +1,27 @@
 # Backend
 
+## 使用说明
+* 安装 mysql 并启动，建一个新的 database：
+```
+create database ${your database name}
+```
+* 将 mysql 的用户名、密码、database名记录下来，并替换 aelous/settings.py 中的 Databases 配置
+* 建立 virtualenv 并启动服务：
+```
+pip3 install virtualenv
+cd Backend
+virtualenv --no-site-packages venv
+source venv/bin/activate
+pip install django
+pip install django-cors-headers
+pip install djangorestframework
+pip install validators
+python manage.py migrate
+python manage.py runserver 8000
+```
+* 可能的 bugs 和解决方案：
+https://blog.csdn.net/lijing742180/article/details/91966031
+
 ## 登录注册
 
 ### 路径
