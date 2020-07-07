@@ -1,11 +1,11 @@
 # Backend
 
 ## 使用说明
-* 安装 mysql 并启动，建一个新的dataset：
+* 安装 mysql 并启动，建一个新的 database：
 ```
-create dataset ${your dataset name}
+create database ${your database name}
 ```
-* 将 mysql 的用户名、密码、dataset名记录下来，并替换 aelous/settings.py 中的 Databases 配置
+* 将 mysql 的用户名、密码、database名记录下来，并替换 aelous/settings.py 中的 Databases 配置
 * 建立 virtualenv 并启动服务：
 ```
 pip3 install virtualenv
