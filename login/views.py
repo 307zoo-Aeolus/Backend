@@ -345,3 +345,36 @@ def postRAs(request):
                                'content': RAsList})
     else:
         return myJsonResponse(dictFail('Request method is not POST.'))
+
+def getForum(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logout.'))
+    frmname = request.session['frmname']
+    if request.method == 'GET':
+        try:
+            forum = models.Forum.objects.get(forum_name=frmname)
+        except:
+            return myJsonResponse(dictFail('Forum {} not existed.'.format(frmname)))
+        rst = models.Forum.get(forum_name = frmname)
+        forumInfo = {'forum_name':rst.forum_name,'time':rst.time,'link':rst.link}
+        
+        return myJsonResponse({'status': 'ok',
+                            'type': 'forums',
+                            'content': forumInfo})
+    
+def getFavourite(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logout.'))
+    username = request.session['username']
+    if request.method == 'GET':
+        try:
+            favourites = models.Favourite.objects.get(username=username)
+        except:
+            return myJsonResponse(dictFail('User {} doesn\'t have a favourite.'.format(username)))
+        favouritelist = [ {'forum_name':x.forum.forum_name,'time':x.forum.time,'link':x.forum.link} for x in favourites]
+        return myJsonResponse({'status': 'ok',
+                            'type': 'favourites',
+                            'content': favouritelist})
+
+
+

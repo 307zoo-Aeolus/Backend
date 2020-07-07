@@ -73,5 +73,5 @@ class Forum(models.Model):
     link = models.CharField(max_length=128)
 
 class Favorite(models.Model):
-    id_name = models.CharField(max_length=128, unique=True)
-    forum_name = models.CharField(max_length=128, unique=True)
+    username = models.CharField(max_length=128, unique=True)
+    forum = models.ManyToManyField('Forum',blank=True)
