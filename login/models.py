@@ -66,3 +66,12 @@ class RAs(models.Model):
         ordering = ['index']
         verbose_name = '研究助理'
         verbose_name_plural = '研究助理'
+
+class Forum(models.Model):
+    forum_name = models.CharField(max_length=128, unique=True)
+    time = models.DateTimeField(auto_now_add=True)
+    link = models.CharField(max_length=128)
+
+class Favorite(models.Model):
+    id_name = models.CharField(max_length=128, unique=True)
+    forum_name = models.CharField(max_length=128, unique=True)
