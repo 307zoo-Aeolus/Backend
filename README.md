@@ -16,6 +16,7 @@ pip install django
 pip install django-cors-headers
 pip install djangorestframework
 pip install validators
+python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver 8000
 ```
