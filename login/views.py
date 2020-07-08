@@ -376,5 +376,28 @@ def getFavourite(request):
                             'type': 'favourites',
                             'content': favouritelist})
 
+def addFavourite(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logout.'))
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = request.session['username']
+        forum = data['forum_name']
+        foruminfo = models.Forum.get(forum_name=forum)
+        models.Favorite.objects.create(
+            username = username,
+            forum = foruminfo
+        )
+        
+        
 
+def deleteFavourite(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logout.'))
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = request.session['username']
+        forum = data['forum_name']
+        foruminfo = models.Forum.get(forum_name=forum)
+        models.Favorite.objects.get(username=username,forum=foruminfo).delete()
 
