@@ -232,7 +232,7 @@ def resetPassword(request):
             user = models.User.objects.get(name=username)
         except:
             return myJsonResponse(dictFail('Username {} not existed.'.format(username)))
-        if user.has_comfirmed == False:
+        if user.has_confirmed == False:
             return myJsonResponse(dictFail('This account {} has not accomplished email confirmation.'.format(username)))
         now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%M')
         newpsw = hash_code(username, now)[:16]
