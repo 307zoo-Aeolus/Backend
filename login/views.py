@@ -78,6 +78,7 @@ def userConfirm(request):
     now = datetime.datetime.now()
     now = now.replace(tzinfo=pytz.timezone('UTC'))
     old = created_time + datetime.timedelta(1) # CONFIRM_DAYS
+    old = old.replace(tzinfo=pytz.timezone('UTC'))
     if now>old:
         confirm.user.delete()
         message = 'Your email expired. Please register again.'
@@ -201,7 +202,7 @@ def changePassword(request):
         return myJsonResponse(dictFail('Already logout.'))
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = data['username']
+        username = request.session['user_name']
         oldpsw, newpsw = data['oldpsw'], data['newpsw']
         if newpsw == '':
             return myJsonResponse(dictFail('Invalid new password'))
@@ -263,7 +264,7 @@ def postContentInterns(user, content):
 def getInterns(request):
     if not request.session.get('is_login', None):
         return myJsonResponse(dictFail('Already logouted'))
-    username = request.session['username']
+    username = request.session['user_name']
     try:
         user = models.User.objects.get(name=username)
     except:
@@ -369,7 +370,7 @@ def getForum(request):
 def getFavourite(request):
     if not request.session.get('is_login', None):
         return myJsonResponse(dictFail('Already logout.'))
-    username = request.session['username']
+    username = request.session['user_name']
     if request.method == 'GET':
         try:
             favourites = models.Favourite.objects.get(username=username)
@@ -385,7 +386,7 @@ def addFavourite(request):
         return myJsonResponse(dictFail('Already logout.'))
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = request.session['username']
+        username = request.session['user_name']
         forum = data['forum_name']
         foruminfo = models.Forum.get(forum_name=forum)
         models.Favorite.objects.create(
@@ -400,7 +401,7 @@ def deleteFavourite(request):
         return myJsonResponse(dictFail('Already logout.'))
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = request.session['username']
+        username = request.session['user_name']
         forum = data['forum_name']
         foruminfo = models.Forum.get(forum_name=forum)
         models.Favorite.objects.get(username=username,forum=foruminfo).delete()
