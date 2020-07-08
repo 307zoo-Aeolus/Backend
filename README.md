@@ -11,11 +11,12 @@ create database ${your database name}
 pip3 install virtualenv
 cd Backend
 virtualenv --no-site-packages venv
-source venv/bin/activate    # Windows: source venv/Script/activate
+source venv/bin/activate        # Windows: source venv/Script/activate
 pip install django
 pip install django-cors-headers
 pip install djangorestframework
 pip install validators
+pip install pymysql
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver 8000
