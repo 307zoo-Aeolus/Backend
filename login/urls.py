@@ -12,5 +12,4 @@ urlpatterns = [
     path('interns/post/',views.postInterns),
     path('ras/get/',views.getRAs),
     path('ras/post/',views.postRAs),
-    path('forum/',views.),
     ]
