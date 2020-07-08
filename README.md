@@ -11,7 +11,7 @@ create database ${your database name}
 pip3 install virtualenv
 cd Backend
 virtualenv --no-site-packages venv
-source venv/bin/activate        # Windows: source venv/Script/activate
+source venv/bin/activate        # Windows: source venv/Scripts/activate
 pip install django
 pip install django-cors-headers
 pip install djangorestframework
