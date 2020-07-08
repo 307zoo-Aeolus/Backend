@@ -103,7 +103,7 @@ def login(request):
         password = data['password']
         try:
             user = models.User.objects.get(name=username)
-            if user.has_comfirmed == False:
+            if user.has_confirmed == False:
                 message = 'The account named {} has not accomplished email confirmation'.format(username)
                 return myJsonResponse(dictFailLogin(message))
             if user.password == hash_code(password):
@@ -141,6 +141,10 @@ def register(request):
         authority = data['authority']
         if username == '':
             message = 'Username cannot be null.'
+            return myJsonResponse(dictFail(message))
+        same_username = models.User.objects.filter(name=username)
+        if same_username:
+            message = 'Username \"{}\" has been used.'.format(username)
             return myJsonResponse(dictFail(message))
         if password1 != password2:
             message = 'Two password inputs do not match.'
