@@ -282,7 +282,7 @@ def postInterns(request):
         return myJsonResponse(dictFail('Already logout.'))
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = request.session['username']
+        username = request.session['user_name']
         content = data['content']
         try:
             user = models.User.get(name=username)
@@ -317,7 +317,7 @@ def postContentRAs(user, content):
 def getRAs(request):
     if not request.session.get('is_login', None):
         return myJsonResponse(dictFail('Already logouted'))
-    username = request.session['username']
+    username = request.session['user_name']
     try:
         user = models.User.objects.get(name=username)
     except:
@@ -335,7 +335,7 @@ def postRAs(request):
         return myJsonResponse(dictFail('Already logout.'))
     if request.method == 'POST':
         data = json.loads(request.body)
-        username = request.session['username']
+        username = request.session['user_name']
         content = data['content']
         try:
             user = models.User.get(name=username)

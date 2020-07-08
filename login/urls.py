@@ -14,4 +14,5 @@ urlpatterns = [
     path('ras/post/',views.postRAs),
     path('forum/get/',views.getForum),
     path('forum/get/',views.getFavourite),
+
     ]
