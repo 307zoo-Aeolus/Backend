@@ -13,7 +13,9 @@ urlpatterns = [
     path('ras/get/',views.getRAs),
     path('ras/post/',views.postRAs),
     path('forum/get/',views.getForum),
-    path('forum/get/',views.getFavourite),
+    path('favourite/get/',views.getFavourite),
+    path('deleteFavourite/post/',views.deleteFavourite),
+    path('addFavourite/post/',views.addFavourite),
     path('research/get/',views.getResearches),
     path('research/post/',views.postResearches),
     ]
