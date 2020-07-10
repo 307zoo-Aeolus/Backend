@@ -18,8 +18,6 @@ sql = "INSERT INTO data_forum('title','location','venue', 'begin','end','synopsi
 def parse(url):
     html = requests.get(url)
     soup = BeautifulSoup(html.content, 'html.parser', from_encoding="utf-8")
-    df = pd.DataFrame(columns=["Title", "Location",
-                               "Venue", 'Begin', 'End', "Synopsis", "Link"])
     data = []
    # for each in soup.find_all(class_= "conferenceDescription" ):
     for each in soup.find_all(class_="listing_content"):
