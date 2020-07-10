@@ -246,6 +246,24 @@ def resetPassword(request):
         return myJsonResponse(dictFail('Request method is not POST.'))
 
 
+def searchInterns(request):
+    mylist = []
+    item = {}
+    content = Interns.objects.all()
+    for one in content:
+        item["index"] = one.index
+        item["city"] = one.city
+        item["company_name"] = one.company_name
+        item["duration"] = one.duration
+        item["frequency"] = one.frequency
+        item["job"] = one.job
+        item["salary"] = one.salary
+        item["link"] = one.job_link
+        mylist.append(item.copy())
+    json_data = JsonResponse({"status":200,"Interns":mylist}, json_dumps_params={'ensure_ascii':False})
+    return json_data
+
+
 def postContentInterns(user, content):
     internsSet = set([x for x in user.interns.all()])
     internsPostSet = set()
@@ -254,7 +272,7 @@ def postContentInterns(user, content):
             interns = models.Interns.get(index=index)
         except:
             return False
-        internsPostSet.add(region)
+        internsPostSet.add(interns)
     for i in internsPostSet-internsSet: user.interns.add(i)
     for i in internsSet-internsPostSet: user.interns.remove(i)
     return True
@@ -300,6 +318,20 @@ def postInterns(request):
         return myJsonResponse(dictFail('Request method is not POST.'))
 
 
+def searchRAs(request):
+    mylist = []
+    item = {}
+    content = RAs.objects.all()
+    for one in content:
+        item["index"] = one.index
+        item["title"] = one.title
+        item["location"] = one.title
+        item["link"] = one.link
+        mylist.append(item.copy())
+    json_data = JsonResponse({"status":200,"RAs":mylist}, json_dumps_params={'ensure_ascii':False})
+    return json_data
+
+
 def postContentRAs(user, content):
     RAsSet = set([x for x in user.ras.all()])
     RAsPostSet = set()
@@ -308,7 +340,7 @@ def postContentRAs(user, content):
             ras = models.RAs.get(index=index)
         except:
             return False
-        RAsPostSet.add(region)
+        RAsPostSet.add(ras)
     for i in RAsPostSet-RAsSet: user.ras.add(i)
     for i in RAsSet-RAsPostSet: user.ras.remove(i)
     return True
@@ -351,6 +383,21 @@ def postRAs(request):
     else:
         return myJsonResponse(dictFail('Request method is not POST.'))
 
+
+def searchForum(request):
+    mylist = []
+    item = {}
+    content = Forum.objects.all()
+    for one in content:
+        item["index"] = one.index
+        item["forum_name"] = one.forum_name
+        item["time"] = one.time
+        item["link"] = one.link
+        mylist.append(item.copy())
+    json_data = JsonResponse({"status":200,"Forum":mylist}, json_dumps_params={'ensure_ascii':False})
+    return json_data
+
+
 def getForum(request):
     if not request.session.get('is_login', None):
         return myJsonResponse(dictFail('Already logout.'))
@@ -367,6 +414,7 @@ def getForum(request):
                             'type': 'forums',
                             'content': forumInfo})
     
+
 def getFavourite(request):
     if not request.session.get('is_login', None):
         return myJsonResponse(dictFail('Already logout.'))
@@ -394,7 +442,6 @@ def addFavourite(request):
             forum = foruminfo
         )
         
-        
 
 def deleteFavourite(request):
     if not request.session.get('is_login', None):
@@ -406,3 +453,69 @@ def deleteFavourite(request):
         foruminfo = models.Forum.get(forum_name=forum)
         models.Favorite.objects.get(username=username,forum=foruminfo).delete()
 
+
+def searchResearches(request):
+    mylist = []
+    item = {}
+    content = Researches.objects.all()
+    for one in content:
+        item["index"] = one.index
+        item["name"] = one.name
+        item["url"] = one.url
+        item["approaches"] = one.approaches
+        mylist.append(item.copy())
+    json_data = JsonResponse({"status":200,"Researches":mylist}, json_dumps_params={'ensure_ascii':False})
+    return json_data
+
+
+def postContentResearches(user, content):
+    ResearchesSet = set([x for x in user.researches.all()])
+    ResearchesPostSet = set()
+    for index in content:
+        try:
+            researches = models.Researches.get(index=index)
+        except:
+            return False
+        ResearchesPostSet.add(researches)
+    for i in ResearchesPostSet-ResearchesSet: user.researches.add(i)
+    for i in ResearchesSet-ResearchesPostSet: user.researches.remove(i)
+    return True
+
+
+
+@csrf_exempt
+def getResearches(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logouted'))
+    username = request.session['user_name']
+    try:
+        user = models.User.objects.get(name=username)
+    except:
+        return myJsonResponse(dictFail('User {} not existed.'.format(username)))
+    ResearchesList = [{'index': x.index, 'name': x.name, 'link': x.link, 'approaches': x.approaches} 
+                for x in user.researches.all()]
+    return myJsonResponse({'status': 'ok',
+                           'type': 'ras',
+                           'content': ResearchesList})
+
+
+@csrf_exempt
+def postResearches(request):
+    if not request.session.get('is_login', None):
+        return myJsonResponse(dictFail('Already logout.'))
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = request.session['user_name']
+        content = data['content']
+        try:
+            user = models.User.get(name=username)
+        except:
+            return myJsonResponse(dictFail('User {} not existed.'.format(username)))
+        postContentResearches(user, content)
+        ResearchesList = [{'index': x.index, 'name': x.name, 'link': x.link, 'approaches': x.approaches} 
+                for x in user.researches.all()]
+        return myJsonResponse({'status': 'ok',
+                               'type': 'ras',
+                               'content': ResearchesList})
+    else:
+        return myJsonResponse(dictFail('Request method is not POST.'))

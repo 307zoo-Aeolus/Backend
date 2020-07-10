@@ -11,7 +11,7 @@ create database ${your database name}
 pip3 install virtualenv
 cd Backend
 virtualenv --no-site-packages venv
-source venv/bin/activate        # Windows: source venv/Script/activate
+source venv/bin/activate       		 # Windows: source venv/Script/activate
 pip install django
 pip install django-cors-headers
 pip install djangorestframework
@@ -259,6 +259,50 @@ http方法：POST
     "status": "ok",		/*ok和error分别对应修改成功与修改失败*/
     "type": "ras",	/*当status为error时，type字段显示错误信息；否则为ras*/
     "content": [{"index": "", "title": "", "location": "", "link": "",}]	/*当status为error时无content字段；否则返回收藏研究助理列表*/
+}
+```
+
+#### 查看研究
+
+URL：http://127.0.0.1:8000/user/researches/get/
+
+http方法：GET
+
+前端调用该接口时，用户应当处于登录状态，并将用户登录时的cookie传给后端。
+
+当查看成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",		/*ok和error分别对应查看成功与查看失败*/
+    "type": "researches",	/*当status为error时，type字段显示错误信息；否则为researches*/
+    "content": [{"index": "", "name": "", "link": "", "approaches": "",}]	/*当status为error时无content字段；否则返回收藏研究列表*/
+}
+```
+
+#### 修改研究
+
+URL：http://127.0.0.1:8000/user/researches/post/
+
+http方法：POST
+
+前端需要提供的json参数格式为：
+
+```json
+{
+    "content": ["",]	/*该用户新的收藏实习index号码列表*/
+}
+```
+
+前端在调用该接口时，用户应处于登录状态，并将用户登录时的cookie传给后端。
+
+当修改成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",		/*ok和error分别对应修改成功与修改失败*/
+    "type": "researches",	/*当status为error时，type字段显示错误信息；否则为researches*/
+    "content": [{"index": "", "name": "", "link": "", "approaches": "",}]	/*当status为error时无content字段；否则返回收藏研究列表*/
 }
 ```
 
