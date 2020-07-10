@@ -306,3 +306,71 @@ http方法：POST
 }
 ```
 
+#### 查看论坛
+
+URL：http://127.0.0.1:8000/user/forum/get/
+
+http方法：GET
+
+前端调用该接口时，用户应当处于登录状态，并将用户登录时的cookie传给后端。
+
+当查看成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",     /*ok和error分别对应查看成功与查看失败*/
+    "type": "forums",      /*当status为error时，type字段显示错误信息；否则为forums*/
+    "content": {"forum_name":"","time":"","link":"","location":"","organization_name":""}     /*当status为error时>无content字段；否则返回论坛信息*/
+}
+```
+
+#### 查看收藏
+
+URL：http://127.0.0.1:8000/user/favourite/get/
+
+http方法：GET
+
+前端调用该接口时，用户应当处于登录状态，并将用户登录时的cookie传给后端。
+
+查看收藏夹，当查看成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",     /*ok和error分别对应查看成功与查看失败*/
+    "type": "favourites",      /*当status为error时，type字段显示错误信息；否则为favourites*/
+    "content": [ {"forum_name":"","time":"","link":""}]     /*当status为error时>无content字段；否则返回收藏信息*/
+}
+```
+#### 添加收藏
+
+URL：http://127.0.0.1:8000/user/addFavourite/post/
+
+http方法：POST
+
+前端调用该接口时，用户应当处于登录状态，并将用户登录时的cookie传给后端。
+
+添加收藏内容，当添加收藏成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",     /*ok和error分别对应查看成功与查看失败*/
+    "type": "addFavouriteOk",      /*当status为error时，type字段显示错误信息；否则为addFavouriteOk*/
+}
+```
+
+#### 删除收藏
+
+URL：http://127.0.0.1:8000/user/deleteFavourite/post/
+
+http方法：POST
+
+前端调用该接口时，用户应当处于登录状态，并将用户登录时的cookie传给后端。
+
+删除收藏的内容，当删除成功时，后端返回的json参数为：
+
+```json
+{
+    "status": "ok",     /*ok和error分别对应查看成功与查看失败*/
+    "type": "deleteFavouriteOk",      /*当status为error时，type字段显示错误信息；否则为deleteFavouriteOk*/
+}
+```
