@@ -14,5 +14,6 @@ urlpatterns = [
     path('ras/post/',views.postRAs),
     path('forum/get/',views.getForum),
     path('forum/get/',views.getFavourite),
-
+    path('research/get/',views.getResearches),
+    path('research/post/',views.postResearches),
     ]

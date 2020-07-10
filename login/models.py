@@ -10,6 +10,7 @@ class User(models.Model):
     authority = models.CharField(max_length=10, default='user')
     interns = models.ManyToManyField('Interns',blank=True)
     ras = models.ManyToManyField('RAs', blank=True)
+    researches = models.ManyToManyField('Researches', blank=True)
 
     def __str__(self):
         return self.name
@@ -75,3 +76,17 @@ class Forum(models.Model):
 class Favorite(models.Model):
     username = models.CharField(max_length=128, unique=True)
     forum = models.ManyToManyField('Forum',blank=True)
+
+class Research(models.Model):
+    index = models.CharField(max_length=64)
+    name = models.CharField(max_length=128)
+    url = models.CharField(max_length=256)
+    approaches = models.CharField(max_length=256)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        ordering = ['index']
+        verbose_name = '研究'
+        verbose_name_plural = '研究'
